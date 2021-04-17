@@ -1,0 +1,23 @@
+
+body {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+header .navbar {
+    border-radius: 0;
+    background-color: rgb(191, 206, 59);
+    margin: 0;
+    padding: 0 20rem;
+    height: 8vh;
+}
+.navbar-inverse .navbar-nav>li>a{
+    color:rgb(69, 26, 75);
+    font-weight: 600;
+}
+
+main {
+    min-height: 92vh;
+    background-color: rgb(52, 30, 61);
+    padding: 50px 0;
+}
