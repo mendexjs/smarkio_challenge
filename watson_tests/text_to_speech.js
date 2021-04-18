@@ -11,9 +11,9 @@ const textToSpeech = new TextToSpeechV1({
 });
 
 const myText = {
-  text: 'Do. Or do not. There is no try.',
+  text: 'Texto teste, apenas pare verificar o funcionamento do recurso.',
   accept: 'audio/wav',
-  voice: 'en-US_AllisonV3Voice',
+  voice: 'pt-BR_IsabelaV3Voice',
 };
 
 textToSpeech.synthesize(myText)

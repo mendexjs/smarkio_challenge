@@ -4,26 +4,36 @@
   <meta charset="UTF-8">
   <title>SMARKIO FEEDBACK</title>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
   <!-- <link rel="stylesheet" media="(max-width: 650px)" href="/assets/css/responsible.css"" /> TO-DO-->
 </head>
 <body>
-  <header>
-     <nav class="navbar navbar-inverse">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/#" onclick="inProgress()">Sobre</a></li>
-      </ul>
-     </nav>
-  </header>  
+  <div id="app">
+    <header>
+      <nav class="navbar navbar-inverse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/#" onclick="inProgress()">Sobre</a></li>
+          
+        </ul>
+        <div class="user-profile"> 
+          <img id="current_user_photo" src="<%= current_user.photo %>" class="img-round" title="" alt="foto do usuário">
+          <span id="current_user_name"><%= current_user.name %></span>
+        </div>
+      </nav>
+    </header>  
 
-   <main>
-     <div class="container">
-      <%- body %>
-     </div>
-   </main>
-
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script src="assets/js/reviews_script.js"></script>
+    <main>
+      <div class="container" style="width: 80vw !important;">
+        <%- body %>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/reviews_script.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 </body>
 </html>  
