@@ -9,6 +9,8 @@
     "faker": "^4.1.0",
     "ibm-watson": "^6.0.4",
     "moment": "^2.29.1",
-    "nodemon": "^1.12.1"
+    "mysql2": "^2.2.5",
+    "nodemon": "^1.12.1",
+    "sequelize": "^6.6.2"
   }
 }

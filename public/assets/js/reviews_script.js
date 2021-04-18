@@ -12,26 +12,37 @@ var app = new Vue({
             url: '/reviews',
             success: (res) => {
                 console.log(res);
-                this.reviews = res;
+                for(review of res){
+                    this.reviews.push(review);
+                }
             },
         });
     },
     
     methods: {
         addNewReview: function (new_comment) {
+            console.log(typeof(this.reviews), this.reviews);
             comment = {
                 user_name: this.current_user.name,
                 photo: this.current_user.photo,
                 comment: new_comment,
-                created_at: new Date().toLocaleString()
+                readable_created_at: new Date().toLocaleString()
             }
-            this.reviews.push(comment);
-            console.log(this.reviews);
+            
             this.new_comment = '';
-            // TO-DO Bater na API para inserir o registro
+            $.ajax({
+                type: "POST",
+                url: '/reviews',
+                data: comment,
+                success: (res) => {
+                    this.reviews.push(res);
+                },
+            });
+
+
         },
         textToSpeech: function (comment){
-            text = `O ${comment.user_name} fez o seguinte comentário: ${comment.comment}. em ${comment.created_at}`;
+            text = `O ${comment.user_name} fez o seguinte comentário: ${comment.comment}. em ${comment.readable_created_at}`;
             console.log(text);
         }
     },

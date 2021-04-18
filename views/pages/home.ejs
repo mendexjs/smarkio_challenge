@@ -16,7 +16,7 @@
                     <img :src="review.photo" class="wpx-100 img-round mgb-20" title="" alt="" data-edit="false" data-editor="field" data-field="src[Image Path]; title[Image Title]; alt[Image Alternate Text]">
                     <p class="fs-110 font-cond-l comment" contenteditable="false">"{{review.comment}}"</p>
                     <h5 class="font-cond mgb-5 fg-text-d fs-130" contenteditable="false">{{review.user_name}}</h5>
-                    <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">{{review.created_at}}</small>
+                    <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">{{review.readable_created_at}}</small>
                     <span @click="textToSpeech(review)" class="sound-icon glyphicon glyphicon-volume-up" aria-hidden="true"></span>
                 </li>
               </ul>
