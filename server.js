@@ -8,8 +8,7 @@ const { ibm } = env.environment;
 
 const expressLayouts = require('express-ejs-layouts')
 const app = express()
-const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-const port = process.env.PORT || 4016;//random(4002, 9000);
+const port = process.env.PORT || 4123;
 
 
 //Database Connection
