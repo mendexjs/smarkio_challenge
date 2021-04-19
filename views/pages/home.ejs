@@ -6,18 +6,38 @@
             <div class="form-container mg-top-10-percent">
                 <h4 style="float: left; padding: 10px;">Queremos saber o quem você realmente sente</h4>
                 <textarea v-model="new_comment" class="form-control" rows="4" placeholder="Digite seu comentário aqui..."></textarea>
-                <button type="button" :disabled="new_comment == ''" @click="addNewReview(new_comment)" class="btn btn-primary btn-lg btn-block mg-top-10">Publicar meu comentário</button>
+                <button
+                    type="button"
+                    :disabled="new_comment == ''"
+                    @click="addNewReview(new_comment)"
+                    class="btn btn-primary btn-lg btn-block mg-top-10"
+                    style="border: none; outline: none;"
+                >
+                    Publicar meu comentário
+                </button>
             </div>
         </div>
         <div class="col-md-6">
             <h3 class="">Sessão de Comentários</h3>
             <ul class="hash-list cols-12  pad-30-all align-center text-sm" >
-                <li v-for="review in reviews" class="col col-lg-6 col-md-12 col-sm-6 col-xs-12 shadow comment-card" style="border: none !important;">
-                    <img :src="review.photo" class="wpx-100 img-round mgb-20" title="" alt="" data-edit="false" data-editor="field" data-field="src[Image Path]; title[Image Title]; alt[Image Alternate Text]">
-                    <p class="fs-110 font-cond-l comment" contenteditable="false">"{{review.comment}}"</p>
-                    <h5 class="font-cond mgb-5 fg-text-d fs-130" contenteditable="false">{{review.user_name}}</h5>
-                    <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">{{review.readable_created_at}}</small>
-                    <span @click="textToSpeech(review)" class="sound-icon glyphicon glyphicon-volume-up" aria-hidden="true"></span>
+                <li v-for="(review, index) in reviews" class="col col-lg-6 col-md-12 col-sm-6 col-xs-12 shadow comment-card" style="border: none !important;">
+                    <img :src="review.photo" class="wpx-80 img-round mgb-20" title="" alt="" data-edit="false" data-editor="field" data-field="src[Image Path]; title[Image Title]; alt[Image Alternate Text]">
+                    <p class="fs-110 font-cond-l comment" contenteditable="false">"
+                        {{review.comment}}"
+                    </p>
+                    <h5 class="font-cond mgb-5 fg-text-d fs-130" contenteditable="false">
+                        {{review.user_name}}
+                    </h5>
+                    <small class="font-cond case-u lts-sm fs-80 fg-text-l" contenteditable="false">
+                        {{review.readable_created_at}}
+                    </small>
+                    <button 
+                        @click="textToSpeech(review, index)" 
+                        class="sound-icon glyphicon glyphicon-volume-up"
+                        :id="'play-button-' + index"
+                        aria-hidden="true"
+                    >
+                    </button>
                 </li>
               </ul>
         </div>

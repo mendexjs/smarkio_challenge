@@ -1,14 +1,20 @@
 const express = require('express')
 const faker = require('faker')
-// const bodyParser = require('body-parser')
+const fs = require('fs');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
+const env = require('./public/assets/environment');
+const { ibm } = env.environment;
+
 const expressLayouts = require('express-ejs-layouts')
 const app = express()
 const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
-const port = process.env.PORT || 4015;//random(4002, 9000);
+const port = process.env.PORT || 4016;//random(4002, 9000);
 
 
 //Database Connection
 const database = require('./db');
+// const watson = require('./watson/text_to_speech');
 const Review = require('./models/review');
 
 async function connectDb(){
@@ -20,12 +26,14 @@ async function connectDb(){
     }
 }
 
-
-
-
-
-
 connectDb();
+
+const textToSpeech = new TextToSpeechV1({
+  authenticator: new IamAuthenticator({
+    apikey: ibm.api_key,
+  }),
+  serviceUrl: ibm.urls.text_to_speech,
+});
 
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
@@ -51,7 +59,6 @@ app.get('/', (req, res) => {
 app.get('/reviews', (req, res) => { // TO-DO
     Review.findAll()
     .then((data) => {
-        console.log(data);
         res.send(data);
     })
     .catch((error) => {
@@ -74,5 +81,31 @@ app.post('/reviews', (req, res) => { // TO-DO
     .catch((error) => {
         console.log(error);
     });
+
+})
+
+app.post('/api/text_to_speech', (req, res) => { // TO-DO
+    const { text } = req.body;
+    textToSpeech.synthesize({
+      text: text,
+      accept: 'audio/wav',
+      voice: ibm.voice,
+    })
+    .then(response => {
+    // only necessary for wav formats,
+    // otherwise `response.result` can be directly piped to a file
+        return textToSpeech.repairWavHeaderStream(response.result);
+    })
+    .then(buffer => {
+        fs.writeFileSync('public/assets/audios/last_audio.wav', buffer);
+        res.status(200).end();
+    })
+    .catch(err => {
+        console.log('algo deu errado: ', err);
+        res.status(500).end();
+    });
+    
+    
+    
 
 })

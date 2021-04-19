@@ -1,7 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
-        photo: null,
+        speechRequest: false,
         new_comment: "",
         reviews: [
         ]
@@ -11,7 +11,6 @@ var app = new Vue({
             type: "GET",
             url: '/reviews',
             success: (res) => {
-                console.log(res);
                 for(review of res){
                     this.reviews.push(review);
                 }
@@ -21,7 +20,6 @@ var app = new Vue({
     
     methods: {
         addNewReview: function (new_comment) {
-            console.log(typeof(this.reviews), this.reviews);
             comment = {
                 user_name: this.current_user.name,
                 photo: this.current_user.photo,
@@ -38,12 +36,29 @@ var app = new Vue({
                     this.reviews.push(res);
                 },
             });
-
-
         },
-        textToSpeech: function (comment){
-            text = `O ${comment.user_name} fez o seguinte comentário: ${comment.comment}. em ${comment.readable_created_at}`;
-            console.log(text);
+        textToSpeech: function (comment, index){
+            $(`#play-button-${index}`).css('background-color','#c46e27');
+            if(this.speechRequest == true){
+                return window.alert('Aguarde o fim da primeira requisição');
+            }
+            this.speechRequest = true;
+            const text = `${comment.user_name} fez o seguinte comentário: ${comment.comment}. em ${comment.readable_created_at}`;
+            $.ajax({
+                type: "POST",
+                url: '/api/text_to_speech',
+                data: {
+                    text: text
+                },
+                success: (res) => {
+                    var myAudio = new Audio('/assets/audios/last_audio.wav');
+                    myAudio.play();
+                },
+                complete: () => {
+                    this.speechRequest = false;
+                    $(`#play-button-${index}`).css('background-color','#010C25');
+                }
+            });
         }
     },
     computed: {
@@ -58,6 +73,6 @@ var app = new Vue({
 });
 
 function inProgress(){
-    alert('O dev ainda está trabalhando nisso\
-\nLogo mais veremos aqui uma linda integração com o IBM Watson :)');
+    alert('Este projeto foi desenvolvido pelo Matheus :D\
+\nPara mais informações ou contato, meu GitHub e LinkedIn são @wwwMendex');
 }
